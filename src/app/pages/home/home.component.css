@@ -19,6 +19,6 @@ a {
 }
 
 .countries-list {
-  overflow-y: scroll;
-  height: calc(100vh - 280px);
+  overflow-y: auto;
+  max-height: calc(100vh - 280px);
 }
