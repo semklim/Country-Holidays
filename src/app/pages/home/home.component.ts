@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import type { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { NagerApiService } from 'src/app/services/nager-api.service';
+import { NagerApiService } from 'src/app/services/api/nager-api.service';
 
 @Component({
   selector: 'app-home',
@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
 
   searchCountries(searchTerm: string | null): Observable<AvailableCountries> {
     if (!searchTerm || searchTerm.length === 0) {
-      this.countries = this.allCountries; // Reset to all countries
+      this.loadCountries();
       return of(this.countries);
     }
     this.countries = this.allCountries.filter((country) =>

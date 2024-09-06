@@ -2,37 +2,49 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { HandleErrorService } from '../handleError/handle-error.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NagerApiService {
+export class NagerApiService extends HandleErrorService {
   private apiUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) {}
+  private allCountries?: Observable<AvailableCountries>;
+
+  private count = 0;
+
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   getAllCountries(): Observable<AvailableCountries> {
-    const url = `${this.apiUrl}/api/v3/AvailableCountries`;
-    return this.http.get<AvailableCountries>(url).pipe(catchError(this.handleError));
+    if (!this.allCountries) {
+      const url = `${this.apiUrl}/api/v3/AvailableCountries`;
+      this.allCountries = this.http.get<AvailableCountries>(url).pipe(catchError(this.handleError));
+      this.count++;
+      console.log('fetch times: ' + this.count);
+    }
+    return this.allCountries;
   }
 
   getCountryInfo(countryCode: string): Observable<CountryInfo> {
-    const url = `${this.apiUrl}/CountryInfo/${countryCode}`;
+    const url = `${this.apiUrl}/api/v3/CountryInfo/${countryCode}`;
     return this.http.get<CountryInfo>(url).pipe(catchError(this.handleError));
   }
 
   getLongWeekends(year: number, countryCode: string): Observable<LongWeekend> {
-    const url = `${this.apiUrl}/LongWeekend/${year}/${countryCode}`;
+    const url = `${this.apiUrl}/api/v3/LongWeekend/${year}/${countryCode}`;
     return this.http.get<LongWeekend>(url).pipe(catchError(this.handleError));
   }
 
   getPublicHolidays(year: number, countryCode: string): Observable<PublicHolidays> {
-    const url = `${this.apiUrl}/PublicHolidays/${year}/${countryCode}`;
+    const url = `${this.apiUrl}/api/v3/PublicHolidays/${year}/${countryCode}`;
     return this.http.get<PublicHolidays>(url).pipe(catchError(this.handleError));
   }
 
   isTodayPublicHoliday(countryCode: string): Observable<boolean> {
-    const url = `${this.apiUrl}/IsTodayPublicHoliday/${countryCode}`;
+    const url = `${this.apiUrl}/api/v3/IsTodayPublicHoliday/${countryCode}`;
     return this.http.get(url, { observe: 'response' }).pipe(
       map((response) => {
         if (response.status === 200) {
@@ -48,29 +60,18 @@ export class NagerApiService {
   }
 
   getNextPublicHolidays(countryCode: string): Observable<NextPublicHolidays> {
-    const url = `${this.apiUrl}/NextPublicHolidays/${countryCode}`;
+    const url = `${this.apiUrl}/api/v3/NextPublicHolidays/${countryCode}`;
     return this.http.get<NextPublicHolidays>(url).pipe(catchError(this.handleError));
   }
 
   getNextPublicHolidaysWorldwide(): Observable<NextPublicHolidaysWorldwide> {
-    const url = `${this.apiUrl}/NextPublicHolidaysWorldwide`;
+    const url = `${this.apiUrl}/api/v3/NextPublicHolidaysWorldwide`;
     return this.http.get<NextPublicHolidaysWorldwide>(url).pipe(catchError(this.handleError));
   }
 
   getApiVersion(): Observable<APIVersion> {
-    const url = `${this.apiUrl}/Version`;
+    const url = `${this.apiUrl}/api/v3/Version`;
     return this.http.get<APIVersion>(url).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(() => new Error(errorMessage));
   }
 
   // Handle specific errors for isTodayPublicHoliday method

@@ -1,0 +1,31 @@
+<!-- random-countries-widget.component.html -->
+<div class="random-countries-widget mt-4">
+  <h3 class="text-center">Three Random Countries and Upcoming Holidays</h3>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger text-center">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="row">
+    <div *ngFor="let countryHoliday of randomCountriesWithHolidays" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="countryWidgetLink card-body">
+          <a [routerLink]="['/country', countryHoliday.countryCode]">
+            <h5 class="card-title">
+              <span [ngClass]="'flag-icon flag-icon-' + countryHoliday.countryCode.toLowerCase()"></span>
+              <span class="d-inline-block ms-1">{{ countryHoliday.country }}</span>
+            </h5>
+            <p class="card-text">
+              <strong class="text-black fw-bolder">Next Holiday:</strong> {{ countryHoliday.holidayName }} <br />
+              <strong class="text-black fw-bolder">Date:</strong> {{ countryHoliday.holidayDate }}
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.countryWidgetLink {
+  background-color: transparent;
+  transition: 300ms;
+}
+
+.countryWidgetLink a {
+  color: black;
+  text-decoration: none;
+}
+
+.countryWidgetLink:hover {
+  background-color: whitesmoke;
+}
