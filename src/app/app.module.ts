@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { RandomCountriesWidgetComponent } from './components/widgets/random-countries/random-countries.component';
 import { CountryComponent } from './pages/country/country.component';
 import { HomeComponent } from './pages/home/home.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, CountryComponent, RandomCountriesWidgetComponent],
+  declarations: [AppComponent, HomeComponent, CountryComponent, RandomCountriesWidgetComponent, NotFoundComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   bootstrap: [AppComponent],
 })
