@@ -14,7 +14,10 @@
               <li
                 *ngFor="let country of countries"
                 class="list-group-item d-flex justify-content-between align-items-center">
-                <a [routerLink]="['/country', country.countryCode]" class="text-decoration-none">
+                <a
+                  [routerLink]="['/country', country.name]"
+                  [queryParams]="{ code: country.countryCode }"
+                  class="text-decoration-none">
                   {{ country.name }}
                 </a>
                 <span class="badge bg-primary rounded-pill">{{ country.countryCode }}</span>

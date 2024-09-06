@@ -14,7 +14,7 @@
     <div *ngFor="let countryHoliday of randomCountriesWithHolidays" class="col-md-4 mb-4">
       <div class="card h-100">
         <div class="countryWidgetLink card-body">
-          <a [routerLink]="['/country', countryHoliday.countryCode]">
+          <a [routerLink]="['/country', countryHoliday.country]" [queryParams]="{ code: countryHoliday.countryCode }">
             <h5 class="card-title">
               <span [ngClass]="'flag-icon flag-icon-' + countryHoliday.countryCode.toLowerCase()"></span>
               <span class="d-inline-block ms-1">{{ countryHoliday.country }}</span>

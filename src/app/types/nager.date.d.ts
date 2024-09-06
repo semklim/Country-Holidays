@@ -3,10 +3,12 @@ interface APIVersion {
   version: string | null;
 }
 
-type AvailableCountries = Array<{
+type AvailableCountries = Array<Country>;
+
+type Country = {
   countryCode: string;
   name: string;
-}>;
+};
 
 interface CountryInfo {
   commonName: string;
