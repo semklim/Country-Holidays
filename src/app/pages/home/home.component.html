@@ -1,0 +1,32 @@
+<div class="container ms-0 mt-5">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="text-center mb-4">Search for a Country</h1>
+          <div class="form-group mb-4">
+            <input type="text" placeholder="Enter country name" [formControl]="searchTerm" class="form-control" />
+          </div>
+
+          <div *ngIf="countries.length > 0">
+            <h2 class="mt-4">Countries List</h2>
+            <ul class="countries-list list-group">
+              <li
+                *ngFor="let country of countries"
+                class="list-group-item d-flex justify-content-between align-items-center">
+                <a [routerLink]="['/country', country.countryCode]" class="text-decoration-none">
+                  {{ country.name }}
+                </a>
+                <span class="badge bg-primary rounded-pill">{{ country.countryCode }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="!countries.length && searchTerm.value" class="alert alert-warning mt-4">
+            <p class="mb-0">No countries found.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

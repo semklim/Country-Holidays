@@ -1,0 +1,24 @@
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+a {
+  color: #007bff;
+  transition: color 0.2s;
+  flex: 1 1 100%;
+}
+
+.card li {
+  background-color: white;
+  transition: 0.2s;
+}
+
+.card li:hover {
+  background-color: whitesmoke;
+}
+
+.countries-list {
+  overflow-y: scroll;
+  height: calc(100vh - 280px);
+}
