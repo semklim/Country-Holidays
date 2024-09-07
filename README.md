@@ -22,6 +22,7 @@ This Angular application provides information about countries, their holidays, a
 - **Year Switching**: Easily switch between different years to view holidays for that period.
 - **Error Handling**: Provides meaningful error messages for network issues, invalid data, etc.
 - **404 Page**: A user-friendly "Page Not Found" screen for undefined routes.
+- **SEO**: The application is optimized for search engines and social media sharing.
 
 ## Architecture Overview
 
