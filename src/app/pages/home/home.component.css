@@ -22,3 +22,10 @@ a {
   overflow-y: auto;
   max-height: calc(100vh - 280px);
 }
+
+@media (max-width: 768px) {
+  .countries-list {
+    overflow-y: auto;
+    max-height: calc(40vh);
+  }
+}
