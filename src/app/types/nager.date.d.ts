@@ -58,15 +58,6 @@ type Holiday = {
   types: HolidayTypes[] | null;
 };
 
-// export enum HolidayTypes {
-//   /** Public */
-//   /** Bank (Bank holiday, banks and offices are closed) */
-//   /** School (School holiday, schools are closed) */
-//   /** Authorities (Authorities are closed) */
-//   /** Optional (Majority of people take a day off) */
-//   /** Observance (Optional festivity, no paid day off) */
-// }
-
 /**
 - Public
 - Bank (Bank holiday, banks and offices are closed)
@@ -75,7 +66,13 @@ type Holiday = {
 - Optional (Majority of people take a day off)
 - Observance (Optional festivity, no paid day off)
  */
-type HolidayTypes = 'Public' | 'Bank' | 'School' | 'Authorities' | 'Optional' | 'Observance';
+type HolidayTypes =
+  | 'Public'
+  | 'Bank'
+  | 'School'
+  | 'Authorities'
+  | 'Optional'
+  | 'Observance';
 
 /**The upcoming public holidays for the next 365 days for the given country */
 type NextPublicHolidays = PublicHolidays;

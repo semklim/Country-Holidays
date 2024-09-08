@@ -1,15 +1,21 @@
 <div class="container country-holidays-container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <a [routerLink]="['/']" class="btn btn-outline-secondary btn-lg"> <i class="bi bi-house-fill"></i> Back to Home </a>
+    <a [routerLink]="['/']" class="btn btn-outline-secondary btn-lg">
+      <i class="bi bi-house-fill"></i> Back to Home
+    </a>
   </div>
   <h1 class="text-center mb-4">
-    <span [ngClass]="'flag-icon flag-icon-' + country?.countryCode?.toLowerCase()"></span>
-    <span class="d-inline-block ms-2">Public Holidays in {{ country?.name }} {{ currentYear }}</span>
+    <span [ngClass]="'fi fi-' + country?.countryCode?.toLowerCase()"></span>
+    <span class="d-inline-block ms-2"
+      >Public Holidays in {{ country?.name }} {{ currentYear }}</span
+    >
   </h1>
 
   <div *ngIf="!loading && !error" class="text-center mb-4">
     <ng-container *ngFor="let year of years">
       <button
+        type="button"
+        [ariaDisabled]="year === currentYear"
         [ngClass]="{
           'btn me-2 mb-2': true,
           'btn-primary': year === currentYear,

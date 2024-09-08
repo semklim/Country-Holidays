@@ -33,7 +33,7 @@
     "@angular/router": "^15.2.0",
     "@ng-select/ng-select": "^10.0.4",
     "bootstrap": "^5.3.3",
-    "flag-icon-css": "^4.1.7",
+    "flag-icons": "^7.2.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
@@ -79,6 +79,9 @@
   },
   "jest": {
     "preset": "jest-preset-angular",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/src/$1"
+    },
     "setupFilesAfterEnv": [
       "<rootDir>/src/setup.jest.ts"
     ],

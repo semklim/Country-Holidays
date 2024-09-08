@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HandleErrorService } from '../handleError/handle-error.service';
 
@@ -10,22 +10,20 @@ import { HandleErrorService } from '../handleError/handle-error.service';
 export class NagerApiService extends HandleErrorService {
   private apiUrl = environment.apiBaseUrl;
 
-  private allCountries?: Observable<AvailableCountries>;
-
-  private count = 0;
+  private allCountries$?: Observable<AvailableCountries>;
 
   constructor(private http: HttpClient) {
     super();
   }
 
   getAllCountries(): Observable<AvailableCountries> {
-    if (!this.allCountries) {
+    if (!this.allCountries$) {
       const url = `${this.apiUrl}/api/v3/AvailableCountries`;
-      this.allCountries = this.http.get<AvailableCountries>(url).pipe(catchError(this.handleError));
-      this.count++;
-      console.log('fetch times: ' + this.count);
+      this.allCountries$ = this.http
+        .get<AvailableCountries>(url)
+        .pipe(shareReplay(1), catchError(this.handleError));
     }
-    return this.allCountries;
+    return this.allCountries$;
   }
 
   getCountryInfo(countryCode: string): Observable<CountryInfo> {
@@ -38,8 +36,12 @@ export class NagerApiService extends HandleErrorService {
     return this.http.get<LongWeekend>(url).pipe(catchError(this.handleError));
   }
 
-  getPublicHolidays(year: number, countryCode: string): Observable<PublicHolidays> {
+  getPublicHolidays(
+    year: number,
+    countryCode: string,
+  ): Observable<PublicHolidays> {
     const url = `${this.apiUrl}/api/v3/PublicHolidays/${year}/${countryCode}`;
+    // eslint-disable-next-line prettier/prettier
     return this.http.get<PublicHolidays>(url).pipe(catchError(this.handleError));
   }
 
@@ -61,12 +63,16 @@ export class NagerApiService extends HandleErrorService {
 
   getNextPublicHolidays(countryCode: string): Observable<NextPublicHolidays> {
     const url = `${this.apiUrl}/api/v3/NextPublicHolidays/${countryCode}`;
-    return this.http.get<NextPublicHolidays>(url).pipe(catchError(this.handleError));
+    return this.http
+      .get<NextPublicHolidays>(url)
+      .pipe(catchError(this.handleError));
   }
 
   getNextPublicHolidaysWorldwide(): Observable<NextPublicHolidaysWorldwide> {
     const url = `${this.apiUrl}/api/v3/NextPublicHolidaysWorldwide`;
-    return this.http.get<NextPublicHolidaysWorldwide>(url).pipe(catchError(this.handleError));
+    return this.http
+      .get<NextPublicHolidaysWorldwide>(url)
+      .pipe(catchError(this.handleError));
   }
 
   getApiVersion(): Observable<APIVersion> {
@@ -75,7 +81,9 @@ export class NagerApiService extends HandleErrorService {
   }
 
   // Handle specific errors for isTodayPublicHoliday method
-  private handleIsTodayPublicHolidayError(error: HttpErrorResponse): Observable<never> {
+  private handleIsTodayPublicHolidayError(
+    error: HttpErrorResponse,
+  ): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;

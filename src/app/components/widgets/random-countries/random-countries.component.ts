@@ -7,8 +7,12 @@ import { RandomCountryService } from 'src/app/services/random-country/random-cou
   styleUrls: ['./random-countries.component.css'],
 })
 export class RandomCountriesWidgetComponent implements OnInit {
-  randomCountriesWithHolidays: { country: string; holidayName: string; holidayDate: string; countryCode: string }[] =
-    [];
+  randomCountriesWithHolidays: {
+    country: string;
+    holidayName: string;
+    holidayDate: string;
+    countryCode: string;
+  }[] = [];
 
   loading = true;
 
@@ -21,28 +25,35 @@ export class RandomCountriesWidgetComponent implements OnInit {
   }
 
   fetchRandomCountriesWithHolidays(): void {
-    this.randomCountryService.getNextPublicHolidaysForRandomCountries().subscribe({
-      next: (responses) => {
-        this.randomCountriesWithHolidays = responses.map((country) => {
-          if (country.length > 0) {
-            const { countryCode, countryName, name, date } = country[0];
+    this.randomCountryService
+      .getNextPublicHolidaysForRandomCountries()
+      .subscribe({
+        next: (responses) => {
+          this.randomCountriesWithHolidays = responses.map((country) => {
+            if (country.length > 0) {
+              const { countryCode, countryName, name, date } = country[0];
+              return {
+                countryCode: countryCode,
+                country: countryName,
+                holidayName: name,
+                holidayDate: date,
+              };
+            }
             return {
-              countryCode: countryCode,
-              country: countryName,
-              holidayName: name,
-              holidayDate: date,
+              countryCode: '',
+              country: 'Unknown',
+              holidayName: 'No upcoming holidays',
+              holidayDate: '-',
             };
-          }
-          return { countryCode: '', country: 'Unknown', holidayName: 'No upcoming holidays', holidayDate: '-' };
-        });
+          });
 
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Error fetching holidays for random countries';
-        this.loading = false;
-        console.error(err);
-      },
-    });
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error = 'Error fetching holidays for random countries';
+          this.loading = false;
+          console.error(err);
+        },
+      });
   }
 }

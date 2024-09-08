@@ -45,7 +45,9 @@ export class RandomCountryService extends HandleErrorService {
   }
 
   private getRandomCountries(count: number) {
-    return this.countryService.getAllCountries().pipe(map((country) => this.shuffleArray(country).slice(0, count)));
+    return this.countryService
+      .getAllCountries()
+      .pipe(map((country) => this.shuffleArray(country).slice(0, count)));
   }
 
   /** Shuffles an array to randomize the country codes. */

@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CountryComponent } from './pages/country/country.component';
 import { HomeComponent } from './pages/home/home.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'country/:name', component: CountryComponent },
-  { path: '**', component: NotFoundComponent },
+  {
+    path: 'country/:name',
+    loadChildren: () =>
+      import('./pages/country/country.module').then((m) => m.CountryModule),
+  },
+  {
+    path: '**',
+    loadChildren: () =>
+      import('./pages/not-found/not-found.module').then(
+        (m) => m.NotFoundModule,
+      ),
+  },
 ];
 
 @NgModule({

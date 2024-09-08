@@ -14,14 +14,19 @@
     <div *ngFor="let countryHoliday of randomCountriesWithHolidays" class="col-md-4 mb-4">
       <div class="card h-100">
         <div class="countryWidgetLink card-body">
-          <a [routerLink]="['/country', countryHoliday.country]" [queryParams]="{ code: countryHoliday.countryCode }">
+          <a
+            [routerLink]="['/country', countryHoliday.country]"
+            [queryParams]="{ code: countryHoliday.countryCode }">
             <h5 class="card-title">
-              <span [ngClass]="'flag-icon flag-icon-' + countryHoliday.countryCode.toLowerCase()"></span>
+              <span
+                [ngClass]="'fi fi-' + countryHoliday.countryCode.toLowerCase()"></span>
               <span class="d-inline-block ms-1">{{ countryHoliday.country }}</span>
             </h5>
             <p class="card-text">
-              <strong class="text-black fw-bolder">Next Holiday:</strong> {{ countryHoliday.holidayName }} <br />
-              <strong class="text-black fw-bolder">Date:</strong> {{ countryHoliday.holidayDate }}
+              <strong class="text-black fw-bolder">Next Holiday:</strong>
+              {{ countryHoliday.holidayName }} <br />
+              <strong class="text-black fw-bolder">Date:</strong>
+              {{ countryHoliday.holidayDate }}
             </p>
           </a>
         </div>

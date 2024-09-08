@@ -27,7 +27,10 @@ export class CountryComponent implements OnInit, OnDestroy {
 
   loading = true;
 
-  constructor(private route: ActivatedRoute, private countryService: NagerApiService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private countryService: NagerApiService,
+  ) {}
 
   ngOnInit(): void {
     // Load countries to validate the code later
